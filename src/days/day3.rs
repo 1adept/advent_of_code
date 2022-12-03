@@ -54,8 +54,9 @@ impl Rucksack {
         let left = &self.left.items;
         let right = &self.right.items;
 
-        let intersect = left.intersection(&right);
-        intersect.last().unwrap().clone()
+        let intersect = left.intersection(&right).cloned().collect::<Vec<Item>>();
+        assert!(intersect.len() == 1, "Rucksack compartments dont have exactly 1 common item");
+        intersect[0].clone()
     }
 
     fn all_items(&self) -> HashSet<Item> {
