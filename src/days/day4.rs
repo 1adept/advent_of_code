@@ -7,10 +7,42 @@ pub fn day4() {
         .iter()
         .filter(|assignment| assignment.dublicate_assignments())
         .count();
-    println!("Overlaps in assignements for every elf: {assignments_overlap}");
-
-    let overlapping_pairs = assignments.iter().filter(|ass| ass.any_overlap()).count();
-    println!("Num Overlapping pairs: {overlapping_pairs}");
+        println!("Overlaps in assignements for every elf: {assignments_overlap}");
+        
+        let overlapping_pairs = assignments.iter().filter(|ass| ass.any_overlap()).count();
+        println!("Num Overlapping pairs: {overlapping_pairs}");
+    }
+    
+    /// Doing the whole assignment in one iter
+    pub fn day4_iter() {
+        let (p1, p2) = INPUT
+        .lines()
+        .into_iter()
+        .map(|line| {
+            let mut iter = line
+                .splitn(4, |c| c == '-' || c == ',')
+                .into_iter()
+                .map(|i| i.parse::<usize>().unwrap());
+            (
+                (iter.next().unwrap(), iter.next().unwrap()),
+                (iter.next().unwrap(), iter.next().unwrap()),
+            )
+        })
+        .map(|(a, b)| {
+            let fully_contains = |l: (usize, usize), r: (usize, usize)| l.0 >= r.0 && l.1 <= r.1;
+            let any_contained = |l: (usize, usize), r: (usize, usize)| {
+                l.0 >= r.0 && l.0 <= r.1 || l.1 >= r.0 && l.1 <= r.1
+            };
+            (
+                fully_contains(a, b) || fully_contains(b, a),
+                any_contained(a, b) || any_contained(b, a),
+            )
+        })
+        .map(|(b1, b2)| (b1 as usize, b2 as usize))
+        .reduce(|(p1, p2), (r1, r2)| (p1 + r1, p2 + r2))
+        .unwrap();
+    println!("Result for Part1: {p1}");
+    println!("Result for Part2: {p2}");
 }
 
 fn get_elf_assignments() -> Vec<ElfAssignment> {
