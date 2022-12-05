@@ -17,7 +17,7 @@ pub fn tasks() {
 
 /// Doing the whole assignment in one iter
 pub fn tasks_iter() {
-    let (p1, p2) = util::read_file("./input/2022/day4.txt")
+    let (p1, p2) = super::load_input(4)
         .lines()
         .into_iter()
         .map(|line| {
@@ -48,7 +48,7 @@ pub fn tasks_iter() {
 }
 
 fn get_elf_assignments() -> Vec<ElfAssignment> {
-    util::read_file("./input/2022/day4.txt")
+    super::load_input(4)
         .lines()
         .into_iter()
         .map(|line| ElfAssignment::from(line))

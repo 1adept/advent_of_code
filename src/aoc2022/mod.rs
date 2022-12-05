@@ -1,3 +1,5 @@
+use crate::util;
+
 pub mod day1;
 pub mod day2;
 pub mod day3;
@@ -32,4 +34,8 @@ pub fn day(day: u16) {
         // 24 => day24::tasks(),
         _ => unreachable!("Advent only has 24 days")
     }
+}
+
+fn load_input(day: u16) -> String {
+    util::load_input(2022, day)
 }

@@ -3,7 +3,7 @@ use crate::util;
 pub fn tasks() {
     let mut elfes = Vec::new();
     elfes.push(Elf::default());
-    for calory in util::read_file("./input/2022/day1.txt").lines().into_iter() {
+    for calory in super::load_input(1).lines().into_iter() {
         if calory.is_empty() {
             elfes.push(Elf::default());
             continue;

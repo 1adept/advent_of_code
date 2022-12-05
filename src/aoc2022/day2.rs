@@ -11,7 +11,7 @@ pub fn tasks() {
     //     .map(|(l, r)| r.score_against(l) as u128)
     //     .sum::<u128>();
 
-    let planned_moves = util::read_file("./input/2022/day2.txt")
+    let planned_moves = super::load_input(2)
         .lines()
         .into_iter()
         .filter(|s| !s.is_empty())

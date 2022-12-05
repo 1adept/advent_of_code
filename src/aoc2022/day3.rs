@@ -3,7 +3,7 @@ use std::{collections::HashSet, ops::Deref};
 use crate::util;
 
 pub fn tasks() {
-    let rucksacks: Vec<Rucksack> = util::read_file("./input/2022/day3.txt")
+    let rucksacks: Vec<Rucksack> = super::load_input(3)
         .lines()
         .into_iter()
         .map(|line| {

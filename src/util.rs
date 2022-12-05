@@ -1,7 +1,8 @@
-use std::{fs, io};
+use std::{fmt::format, fs, io};
 
-pub fn read_file(path: &str) -> String {
-    fs::read_to_string(path).expect("Cant read file")
+pub fn load_input(year: u16, day: u16) -> String {
+    let path = format!("./input/{}/day{}.txt", year, day);
+    fs::read_to_string(path).unwrap()
 }
 
 pub fn read_line() -> String {
@@ -15,3 +16,4 @@ pub fn read_line() -> String {
     }
     .to_owned()
 }
+
