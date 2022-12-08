@@ -7,6 +7,7 @@ mod day4;
 mod day5;
 mod day6;
 mod day7;
+mod day8;
 
 pub fn day(day: u16) {
     match day {
@@ -17,7 +18,7 @@ pub fn day(day: u16) {
         5 => day5::tasks(),
         6 => day6::tasks(),
         7 => day7::tasks(),
-        // 8 => day8::tasks(),
+        8 => day8::tasks(),
         // 9 => day9::tasks(),
         // 10 => day10::tasks(),
         // 11 => day11::tasks(),
@@ -35,7 +36,7 @@ pub fn day(day: u16) {
         // 23 => day23::tasks(),
         // 24 => day24::tasks(),
         // 25 => day25::tasks(),
-        _ => unreachable!("Advent only has 25 days")
+        _ => unreachable!("Advent only has 25 days"),
     }
 }
 

@@ -1,5 +1,3 @@
-use crate::util;
-
 pub fn tasks() {
     // Part 1
     // let max_score = INPUT

@@ -1,5 +1,3 @@
-use crate::util;
-
 pub fn tasks() {
     let assignments = get_elf_assignments();
 
@@ -16,6 +14,7 @@ pub fn tasks() {
 }
 
 /// Doing the whole assignment in one iter
+#[allow(unused)]
 pub fn tasks_iter() {
     let (p1, p2) = super::load_input(4)
         .lines()
@@ -114,18 +113,6 @@ impl From<&str> for Assignment {
         let to = split.next().unwrap();
         Assignment {
             range: (from.parse().unwrap(), to.parse().unwrap()),
-        }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    fn create_assignment((a, b): (u8, u8), (c, d): (u8, u8)) -> ElfAssignment {
-        ElfAssignment {
-            first: Assignment { range: (a, b) },
-            second: Assignment { range: (c, d) },
         }
     }
 }

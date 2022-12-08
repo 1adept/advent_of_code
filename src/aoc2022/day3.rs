@@ -1,7 +1,5 @@
 use std::{collections::HashSet, ops::Deref};
 
-use crate::util;
-
 pub fn tasks() {
     let rucksacks: Vec<Rucksack> = super::load_input(3)
         .lines()

@@ -144,10 +144,6 @@ fn char_empty(char: char) -> bool {
     char == ' '
 }
 
-struct CrateMover {
-    holds: Vec<char>,
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -177,13 +173,13 @@ mod tests {
     fn test_move() {
         let mut depot = Depot::default();
         {
-            let mut first = &mut depot.stacks[0];
+            let first = &mut depot.stacks[0];
             first.push('a');
             first.push('b');
             first.push('c');
         }
         {
-            let mut second = &mut depot.stacks[1];
+            let second = &mut depot.stacks[1];
             second.push('z');
             second.push('y');
             second.push('x');
@@ -213,13 +209,13 @@ mod tests {
     fn test_move_keep_order(){
         let mut depot = Depot::default();
         {
-            let mut first = &mut depot.stacks[0];
+            let first = &mut depot.stacks[0];
             first.push('a');
             first.push('b');
             first.push('c');
         }
         {
-            let mut second = &mut depot.stacks[1];
+            let second = &mut depot.stacks[1];
             second.push('z');
             second.push('y');
             second.push('x');

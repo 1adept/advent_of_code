@@ -1,8 +1,32 @@
-use std::{fmt::format, fs, io};
+use std::{
+    fs::{self, File},
+    io::{self, BufReader, Read},
+};
 
 pub fn load_input(year: u16, day: u16) -> String {
     let path = format!("./input/{}/day{}.txt", year, day);
-    fs::read_to_string(path).unwrap()
+    if let Ok(string) = fs::read_to_string(&path) {
+        string
+    } else {
+        let mut file_content = Vec::new();
+        let mut file = File::open(&path).expect("Unable to open file");
+        file.read_to_end(&mut file_content)
+            .expect("Unable to read file");
+        file_content
+            .into_iter()
+            .map(|c| c as char)
+            .collect::<String>()
+    }
+}
+
+pub fn load_input_as_vec(year: u16, day: u16) -> Vec<u8> {
+    let path = format!("./input/{}/day{}.txt", year, day);
+
+    let mut file_content = Vec::new();
+    let mut file = File::open(&path).expect("Unable to open file");
+    file.read_to_end(&mut file_content)
+        .expect("Unable to read file");
+    file_content
 }
 
 pub fn read_line() -> String {
@@ -16,4 +40,3 @@ pub fn read_line() -> String {
     }
     .to_owned()
 }
-
