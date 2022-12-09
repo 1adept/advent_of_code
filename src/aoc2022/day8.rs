@@ -13,12 +13,12 @@ fn far_sight(grid: &Vec<Vec<u8>>) -> usize {
     grid.iter()
         .enumerate()
         .flat_map(|(x, row)| {
-            row.into_iter()
+            row.iter()
                 .enumerate()
                 .map(|(y, _)| (x, y))
                 .collect::<Vec<_>>()
         })
-        .map(|(x, y)| dist(&grid, x, y))
+        .map(|(x, y)| dist(grid, x, y))
         .max()
         .unwrap()
 }
@@ -27,7 +27,7 @@ fn count_visible_trees(grid: &Vec<Vec<u8>>) -> usize {
     let mut trees_visible = 0;
     for (y, col) in grid.iter().enumerate() {
         for (x, _char) in col.iter().enumerate() {
-            if tree_visible(&grid, x, y) {
+            if tree_visible(grid, x, y) {
                 trees_visible += 1;
             }
         }
@@ -35,7 +35,7 @@ fn count_visible_trees(grid: &Vec<Vec<u8>>) -> usize {
     trees_visible
 }
 
-fn grid_get(grid: &Vec<Vec<u8>>, x: usize, y: usize) -> u8 {
+fn grid_get(grid: &[Vec<u8>], x: usize, y: usize) -> u8 {
     *grid.get(y).unwrap().get(x).unwrap()
 }
 
@@ -43,7 +43,7 @@ fn dist(grid: &Vec<Vec<u8>>, x: usize, y: usize) -> usize {
     let w = grid.len();
     let h = grid[0].len();
 
-    let tree = grid_get(&grid, x, y);
+    let tree = grid_get(grid, x, y);
     let mut d_up = 0;
     let mut d_down = 0;
     let mut d_left = 0;
@@ -54,7 +54,7 @@ fn dist(grid: &Vec<Vec<u8>>, x: usize, y: usize) -> usize {
     if y != 0 {
         while y >= d_up + 1 {
             d_up += 1;
-            let t = grid_get(&grid, x, y - d_up);
+            let t = grid_get(grid, x, y - d_up);
             if t >= tree {
                 break;
             }
@@ -66,7 +66,7 @@ fn dist(grid: &Vec<Vec<u8>>, x: usize, y: usize) -> usize {
     if x != 0 {
         while x >= d_left + 1 {
             d_left += 1;
-            let t = grid_get(&grid, x - d_left, y);
+            let t = grid_get(grid, x - d_left, y);
             if t >= tree {
                 break;
             }
@@ -78,7 +78,7 @@ fn dist(grid: &Vec<Vec<u8>>, x: usize, y: usize) -> usize {
     if x != w - 1 {
         while x + d_right + 1 < w {
             d_right += 1;
-            let t = grid_get(&grid, x + d_right, y);
+            let t = grid_get(grid, x + d_right, y);
             if t >= tree {
                 break;
             }
@@ -90,7 +90,7 @@ fn dist(grid: &Vec<Vec<u8>>, x: usize, y: usize) -> usize {
     if y != h - 1 {
         while y + d_down + 1 < h {
             d_down += 1;
-            let t = grid_get(&grid, x, y + d_down);
+            let t = grid_get(grid, x, y + d_down);
             if t >= tree {
                 break;
             }

@@ -8,6 +8,7 @@ mod day5;
 mod day6;
 mod day7;
 mod day8;
+mod day9;
 
 pub fn day(day: u16) {
     match day {
@@ -19,7 +20,7 @@ pub fn day(day: u16) {
         6 => day6::tasks(),
         7 => day7::tasks(),
         8 => day8::tasks(),
-        // 9 => day9::tasks(),
+        9 => day9::tasks(),
         // 10 => day10::tasks(),
         // 11 => day11::tasks(),
         // 12 => day12::tasks(),
