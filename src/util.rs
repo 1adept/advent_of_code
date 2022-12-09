@@ -1,6 +1,6 @@
 use std::{
     fs::{self, File},
-    io::{self, BufReader, Read},
+    io::{self, Read},
 };
 
 pub fn load_input(year: u16, day: u16) -> String {

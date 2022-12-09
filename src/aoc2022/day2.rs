@@ -26,17 +26,17 @@ pub fn tasks() {
 
 #[derive(Debug)]
 enum RPS {
-    ROCK,
-    PAPER,
-    SCISSORS,
+    Rock,
+    Paper,
+    Scissors,
 }
 
 impl From<&str> for RPS {
     fn from(str: &str) -> Self {
         match str {
-            "A" => RPS::ROCK,
-            "B" => RPS::PAPER,
-            "C" => RPS::SCISSORS,
+            "A" => RPS::Rock,
+            "B" => RPS::Paper,
+            "C" => RPS::Scissors,
             _ => unreachable!(),
         }
     }
@@ -44,17 +44,17 @@ impl From<&str> for RPS {
 
 #[derive(Debug)]
 enum Result {
-    WIN,
-    LOSS,
-    DRAW,
+    Win,
+    Loss,
+    Draw,
 }
 
 impl From<&str> for Result {
     fn from(str: &str) -> Self {
         match str {
-            "X" => Result::LOSS,
-            "Y" => Result::DRAW,
-            "Z" => Result::WIN,
+            "X" => Result::Loss,
+            "Y" => Result::Draw,
+            "Z" => Result::Win,
             _ => unreachable!(),
         }
     }
@@ -63,9 +63,9 @@ impl From<&str> for Result {
 impl Result {
     fn score(&self) -> u8 {
         match self {
-            Result::WIN => 6,
-            Result::LOSS => 0,
-            Result::DRAW => 3,
+            Result::Win => 6,
+            Result::Loss => 0,
+            Result::Draw => 3,
         }
     }
 }
@@ -73,36 +73,36 @@ impl Result {
 impl RPS {
     fn counter_for_result(&self, result: Result) -> RPS {
         let result_slide = match result {
-            Result::WIN => 1,
-            Result::LOSS => -1,
-            Result::DRAW => 0,
+            Result::Win => 1,
+            Result::Loss => -1,
+            Result::Draw => 0,
         };
 
         let index = match self {
-            RPS::ROCK => 0,
-            RPS::PAPER => 1,
-            RPS::SCISSORS => 2,
+            RPS::Rock => 0,
+            RPS::Paper => 1,
+            RPS::Scissors => 2,
         };
         let new_index = ((3 + index + result_slide) % 3) as usize;
         match new_index {
-            0 => RPS::ROCK,
-            1 => RPS::PAPER,
-            2 => RPS::SCISSORS,
+            0 => RPS::Rock,
+            1 => RPS::Paper,
+            2 => RPS::Scissors,
             _ => unreachable!(),
         }
     }
 
     fn score_against(&self, other: RPS) -> u8 {
         let result = match (self, other) {
-            (RPS::ROCK, RPS::ROCK) => Result::DRAW,
-            (RPS::ROCK, RPS::PAPER) => Result::LOSS,
-            (RPS::ROCK, RPS::SCISSORS) => Result::WIN,
-            (RPS::PAPER, RPS::ROCK) => Result::WIN,
-            (RPS::PAPER, RPS::PAPER) => Result::DRAW,
-            (RPS::PAPER, RPS::SCISSORS) => Result::LOSS,
-            (RPS::SCISSORS, RPS::ROCK) => Result::LOSS,
-            (RPS::SCISSORS, RPS::PAPER) => Result::WIN,
-            (RPS::SCISSORS, RPS::SCISSORS) => Result::DRAW,
+            (RPS::Rock, RPS::Rock) => Result::Draw,
+            (RPS::Rock, RPS::Paper) => Result::Loss,
+            (RPS::Rock, RPS::Scissors) => Result::Win,
+            (RPS::Paper, RPS::Rock) => Result::Win,
+            (RPS::Paper, RPS::Paper) => Result::Draw,
+            (RPS::Paper, RPS::Scissors) => Result::Loss,
+            (RPS::Scissors, RPS::Rock) => Result::Loss,
+            (RPS::Scissors, RPS::Paper) => Result::Win,
+            (RPS::Scissors, RPS::Scissors) => Result::Draw,
         };
 
         result.score() + self.score()
@@ -110,9 +110,9 @@ impl RPS {
 
     fn score(&self) -> u8 {
         match self {
-            RPS::ROCK => 1,
-            RPS::PAPER => 2,
-            RPS::SCISSORS => 3,
+            RPS::Rock => 1,
+            RPS::Paper => 2,
+            RPS::Scissors => 3,
         }
     }
 }

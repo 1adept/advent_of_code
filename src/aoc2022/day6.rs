@@ -7,19 +7,19 @@ pub fn tasks() {
 }
 
 fn task1(input: &str) -> String {
-    find_marker::<4>(&input)
+    find_marker::<4>(input)
 }
 
 fn task2(input: &str) -> String {
-    find_marker::<14>(&input)
+    find_marker::<14>(input)
 }
 
 fn find_marker<const L: usize>(input: &str) -> String {
     let mut char_iter = input.chars().enumerate();
     let mut chars: [char; L] = [' '; L];
 
-    for i in 0..L {
-        chars[i] = char_iter.next().unwrap().1;
+    for char in chars.iter_mut().take(L){
+        *char = char_iter.next().unwrap().1;
     }
 
     for (i, c) in char_iter {

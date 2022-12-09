@@ -16,14 +16,14 @@ pub fn tasks() {
     task2(&rucksacks);
 }
 
-fn task1(rucksacks: &Vec<Rucksack>) -> u64 {
+fn task1(rucksacks: &[Rucksack]) -> u64 {
     rucksacks
         .iter()
         .map(|r| *r.find_doubled_item() as u64)
         .sum::<u64>()
 }
 
-fn task2(rucksacks: &Vec<Rucksack>) {
+fn task2(rucksacks: &[Rucksack]) {
     let mut badges = rucksacks
         .chunks(3)
         .map(|chunk| {
@@ -52,7 +52,7 @@ impl Rucksack {
         let left = &self.left.items;
         let right = &self.right.items;
 
-        let intersect = left.intersection(&right).cloned().collect::<Vec<Item>>();
+        let intersect = left.intersection(right).cloned().collect::<Vec<Item>>();
         assert!(
             intersect.len() == 1,
             "Rucksack compartments dont have exactly 1 common item"

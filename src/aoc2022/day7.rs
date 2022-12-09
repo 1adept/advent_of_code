@@ -121,11 +121,11 @@ $ ls
 
     #[test]
     fn test_p1() {
-        assert_eq!(95437, size_of_dirs(&read_dirs(&INPUT)));
+        assert_eq!(95437, size_of_dirs(&read_dirs(INPUT)));
     }
 
     #[test]
     fn test_p2() {
-        assert_eq!(24933642, delete_smalles_to_free(&read_dirs(&INPUT)));
+        assert_eq!(24933642, delete_smalles_to_free(&read_dirs(INPUT)));
     }
 }

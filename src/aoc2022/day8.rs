@@ -52,7 +52,7 @@ fn dist(grid: &Vec<Vec<u8>>, x: usize, y: usize) -> usize {
     const EDGE: usize = 0;
 
     if y != 0 {
-        while y >= d_up + 1 {
+        while y > d_up {
             d_up += 1;
             let t = grid_get(grid, x, y - d_up);
             if t >= tree {
@@ -64,7 +64,7 @@ fn dist(grid: &Vec<Vec<u8>>, x: usize, y: usize) -> usize {
     }
 
     if x != 0 {
-        while x >= d_left + 1 {
+        while x > d_left {
             d_left += 1;
             let t = grid_get(grid, x - d_left, y);
             if t >= tree {
@@ -171,7 +171,7 @@ mod tests {
 
     #[test]
     fn test_visibility() {
-        let grid = read_data(&INPUT);
+        let grid = read_data(INPUT);
 
         let check_vis_at = |x, y| tree_visible(&grid, x, y);
         assert!(check_vis_at(0, 0));
@@ -182,17 +182,17 @@ mod tests {
         assert!(check_vis_at(1, 0));
         assert!(check_vis_at(1, 1));
         assert!(check_vis_at(1, 2));
-        assert!(check_vis_at(1, 3) == false);
+        assert!(!check_vis_at(1, 3));
         assert!(check_vis_at(1, 4));
         assert!(check_vis_at(2, 0));
         assert!(check_vis_at(2, 1));
-        assert!(check_vis_at(2, 2) == false);
+        assert!(!check_vis_at(2, 2));
         assert!(check_vis_at(2, 3));
         assert!(check_vis_at(2, 4));
         assert!(check_vis_at(3, 0));
-        assert!(check_vis_at(3, 1) == false);
+        assert!(!check_vis_at(3, 1));
         assert!(check_vis_at(3, 2));
-        assert!(check_vis_at(3, 3) == false);
+        assert!(!check_vis_at(3, 3));
         assert!(check_vis_at(3, 4));
         assert!(check_vis_at(4, 0));
         assert!(check_vis_at(4, 1));
@@ -203,14 +203,14 @@ mod tests {
 
     #[test]
     fn test_part1() {
-        let grid = read_data(&INPUT);
+        let grid = read_data(INPUT);
 
         assert_eq!(21, count_visible_trees(&grid));
     }
 
     #[test]
     fn test_part2() {
-        let grid = read_data(&INPUT);
+        let grid = read_data(INPUT);
 
         // assert_eq!(4, dist(&grid, 0, 0));
         assert_eq!(4, dist(&grid, 2, 1));

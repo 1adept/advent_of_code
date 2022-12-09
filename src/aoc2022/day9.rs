@@ -14,17 +14,9 @@ pub fn tasks() {
 fn rope_tail_visits(commands: &[Command], tail_size: usize) -> usize {
     let mut head = Rope::head().with_tail(tail_size);
 
-    let mut end = &head;
-    while let Some(knot) = &end.knot {
-        println!("{:?}", end);
-        end = knot;
-    }
-
     let mut visitor = RopeVisitor::new();
 
-    let sep = "#".repeat(10);
     for cmd in commands {
-        println!("{} {:?} {}", sep, cmd, sep);
         for _i in 0..cmd.len {
             head.move_dir(&cmd.dir);
             visitor.visit_last(&head);
@@ -76,7 +68,6 @@ enum Direction {
 
 #[derive(Debug)]
 struct Rope {
-    name: String,
     coordinate: Coordinate,
     knot: Option<Box<Rope>>,
 }
@@ -84,27 +75,21 @@ struct Rope {
 impl Rope {
     fn head() -> Self {
         Rope {
-            name: "HEAD".to_owned(),
             coordinate: Coordinate::new(0, 0),
             knot: None,
         }
     }
     fn with_tail(mut self, tail_size: usize) -> Self {
         let mut tail = &mut self;
-        for i in 0..tail_size {
-            let mut new_tail = Rope::tail();
-            new_tail.name = format!("Tail {}", 1 + i);
+        for _i in 0..tail_size {
+            let new_tail = Self {
+                coordinate: Coordinate { x: 0, y: 0 },
+                knot: None,
+            };
             tail.knot = Some(Box::new(new_tail));
             tail = tail.knot.as_mut().unwrap();
         }
         self
-    }
-    fn tail() -> Self {
-        Self {
-            name: "Tail".to_owned(),
-            coordinate: Coordinate::new(0, 0),
-            knot: None,
-        }
     }
 
     fn move_dir(&mut self, dir: &Direction) {
@@ -136,38 +121,6 @@ impl Rope {
             }
         }
     }
-
-    fn head_pull(&mut self) {
-        let head = &self.coordinate;
-    }
-}
-
-fn head_pull(head: &mut Rope) {
-    let head_pos = head.coordinate.clone();
-
-    let mut current = head;
-    while let Some(knot) = &mut current.knot {
-        let touch = current.coordinate.touching(&knot.coordinate);
-        if !touch {
-            let x = (head_pos.x - knot.coordinate.x).abs().clamp(-1, 1);
-            let y = (head_pos.y - knot.coordinate.y).abs().clamp(-1, 1);
-
-            // REMEMBER: Not in range
-            let dir = match (x, y) {
-                (0, 1) => Direction::Up,
-                (0, -1) => Direction::Down,
-                (-1, 0) => Direction::Left,
-                (1, 0) => Direction::Right,
-                (1, 1) => Direction::UpRight,
-                (-1, 1) => Direction::UpLeft,
-                (1, -1) => Direction::DownRight,
-                (-1, -1) => Direction::DownLeft,
-                _ => unreachable!(),
-            };
-            knot.move_dir(&dir); // Will pull next 'automatically'
-        }
-        current = knot;
-    }
 }
 
 #[derive(Debug)]
@@ -187,21 +140,17 @@ impl RopeVisitor {
         }
     }
 
+    /// Yeah i spent most of my time on this one because i thought every tail-piece count to the score ...
+    #[allow(unused)]
     fn visit(&mut self, rope: &Rope) {
-        // let mut end: &Rope = rope.knot.as_ref().unwrap(); //Min 1 knot
-        // self.positions.insert(end.coordinate.clone());
         let mut end = rope;
-        println!("Head: {:?}", rope.coordinate);
         while let Some(knot) = &end.knot {
-            println!("{} => {:?}", knot.name, knot.coordinate);
             end = knot;
             self.positions.insert(end.coordinate.clone());
         }
-        println!("---");
     }
 
     fn visit_last(&mut self, rope: &Rope) {
-
         let mut end = rope;
         while let Some(knot) = &end.knot {
             end = knot;
@@ -256,14 +205,14 @@ U 20";
 
     #[test]
     fn test_part1() {
-        let commands = read_commands(&INPUT1);
+        let commands = read_commands(INPUT1);
 
         assert_eq!(13, rope_tail_visits(&commands, 1));
     }
 
     #[test]
     fn test_part2() {
-        let commands = read_commands(&INPUT2);
+        let commands = read_commands(INPUT2);
 
         assert_eq!(36, rope_tail_visits(&commands, 9));
     }

@@ -50,7 +50,7 @@ fn get_elf_assignments() -> Vec<ElfAssignment> {
     super::load_input(4)
         .lines()
         .into_iter()
-        .map(|line| ElfAssignment::from(line))
+        .map(ElfAssignment::from)
         .collect()
 }
 
@@ -73,7 +73,7 @@ impl ElfAssignment {
 
 impl From<&str> for ElfAssignment {
     fn from(str: &str) -> Self {
-        let mut split = str.split(",").into_iter();
+        let mut split = str.split(',');
         ElfAssignment {
             first: Assignment::from(split.next().unwrap()),
             second: Assignment::from(split.next().unwrap()),
@@ -108,7 +108,7 @@ impl Assignment {
 
 impl From<&str> for Assignment {
     fn from(str: &str) -> Self {
-        let mut split = str.split("-").into_iter();
+        let mut split = str.split('-');
         let from = split.next().unwrap();
         let to = split.next().unwrap();
         Assignment {

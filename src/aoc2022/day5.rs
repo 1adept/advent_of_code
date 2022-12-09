@@ -13,9 +13,9 @@ pub fn tasks() {
 }
 
 fn task1(input: &str) -> String {
-    let mut depot = read_initial_depot(&input);
+    let mut depot = read_initial_depot(input);
 
-    instructions(&input)
+    instructions(input)
         .map(read_instruction)
         .for_each(|ins| depot.execute(ins));
 
@@ -23,9 +23,9 @@ fn task1(input: &str) -> String {
 }
 
 fn task2(input: &str) -> String {
-    let mut depot = read_initial_depot(&input);
+    let mut depot = read_initial_depot(input);
 
-    instructions(&input)
+    instructions(input)
         .map(read_instruction)
         .for_each(|ins| depot.execute_keep_order(ins));
 
@@ -59,7 +59,7 @@ fn read_initial_depot(input: &str) -> Depot {
         .rev()
         .map(|line| {
             line.as_bytes()
-                .into_iter()
+                .iter()
                 .skip(START)
                 .step_by(GAP)
                 .map(|c| *c as char)

@@ -1,7 +1,7 @@
 pub fn tasks() {
     let mut elfes = Vec::new();
     elfes.push(Elf::default());
-    for calory in super::load_input(1).lines().into_iter() {
+    for calory in super::load_input(1).lines() {
         if calory.is_empty() {
             elfes.push(Elf::default());
             continue;
