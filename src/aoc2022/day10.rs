@@ -172,7 +172,7 @@ mod tests {
 
     #[test]
     fn test_part1() {
-        let mut instr = read_instructions(&INPUT);
+        let mut instr = read_instructions(INPUT);
 
         let sum = tick_signal(&mut instr, 20, 40);
         assert_eq!(13140, sum);
