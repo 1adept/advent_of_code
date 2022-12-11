@@ -12,10 +12,10 @@ pub fn tasks() {
 }
 
 fn calculate_monkey_business(input: &str, rounds: usize, recovering: bool) -> WorryCount {
-    let mut monkeys = read_monkeys(&input);
+    let mut monkeys = read_monkeys(input);
     let handling = monkey_handling(&mut monkeys, rounds, recovering);
-    let monkey_business_2 = count_monkey_business(handling, 2);
-    monkey_business_2
+
+    count_monkey_business(handling, 2)
 }
 
 fn monkey_handling(
@@ -34,10 +34,8 @@ fn monkey_handling(
                 .symbols
                 .iter()
                 .flat_map(|symbol| {
-                    if let Symbol::Val(val) = symbol {
-                        if let Value::Literal(div) = val {
-                            return Some(*div);
-                        }
+                    if let Symbol::Val(Value::Literal(div)) = symbol {
+                        return Some(*div);
                     }
                     None
                 })
@@ -57,9 +55,7 @@ fn monkey_handling(
 
     while !rounds.complete() {
         for current_monkey in 0..monkeys.len() {
-            if !monkey_inspects.contains_key(&current_monkey) {
-                monkey_inspects.insert(current_monkey, 0);
-            }
+            monkey_inspects.entry(current_monkey).or_insert(0);
             let monkey_inspections = monkey_inspects.get_mut(&current_monkey).unwrap();
 
             let mut passed_items = Vec::new();
@@ -71,7 +67,7 @@ fn monkey_handling(
                     let mut worry = monkey.inspect(&mut vars);
                     if recovering {
                         worry.recover();
-                    }else{
+                    } else {
                         worry.level %= common_divisor;
                     }
                     vars.set("new", worry.level);
@@ -105,13 +101,9 @@ fn monkey_handling(
 
 fn count_monkey_business(map: HashMap<usize, WorryCount>, top: usize) -> WorryCount {
     let mut values = map.values().collect::<Vec<_>>();
-    values.sort_by(|a, b| b.cmp(&a));
+    values.sort_by(|a, b| b.cmp(a));
 
-    let mut monkey_business = 1;
-    for mb in values[..top].to_vec() {
-        monkey_business *= mb;
-    }
-    monkey_business
+    values.iter().take(top).map(|c| **c).product()
 }
 
 #[derive(Debug)]
@@ -142,14 +134,10 @@ struct Worry {
 
 impl Worry {
     const OLD: &str = "old";
-    const NEW: &str = "new";
+    // const NEW: &str = "new";
 
     fn new(level: WorryCount) -> Self {
         Worry { level }
-    }
-
-    fn print(&self) -> String {
-        self.level.clone().to_string()
     }
 
     /// Recover to a third of current level
@@ -179,17 +167,12 @@ impl Monkey {
         worry
     }
 
-    fn test(&self, worry: &Worry, vars: &mut Vars) -> bool {
+    fn test(&self, _worry: &Worry, vars: &mut Vars) -> bool {
         match self.test.eval(vars) {
             0 => false,
             1 => true,
             _ => panic!("Wrong eval in test"),
         }
-    }
-
-    fn pass_item_to_monkey(&mut self, monkey: &mut Monkey) {
-        let item = self.items.pop_back().unwrap();
-        monkey.items.push_back(item);
     }
 }
 
@@ -279,7 +262,7 @@ impl Vars {
     fn set(&mut self, name: &str, value: WorryCount) {
         self.vars
             .iter_mut()
-            .find(|(n, v)| n == name)
+            .find(|(n, _v)| n == name)
             .unwrap_or_else(|| panic!("Variable named '{name}' does not exist"))
             .1 = value;
     }
@@ -287,7 +270,7 @@ impl Vars {
     fn get(&self, name: &str) -> WorryCount {
         self.vars
             .iter()
-            .find(|(n, v)| n == name)
+            .find(|(n, _v)| n == name)
             .unwrap_or_else(|| panic!("Variable named '{name}' does not exist"))
             .1
     }
@@ -340,11 +323,7 @@ impl Operand {
                 left
             }
             Operand::EqEq => {
-                let value = if left.eval(vars) == right.eval(vars) {
-                    1
-                } else {
-                    0
-                };
+                let value = u64::from(left.eval(vars) == right.eval(vars));
                 Value::Literal(value)
             }
             Operand::Add => Value::Literal(l + r),
@@ -446,7 +425,7 @@ fn read_monkeys(input: &str) -> Vec<Monkey> {
         let items = items
             .split(',')
             .map(|item| item.trim().parse::<WorryCount>().unwrap())
-            .map(|lvl| Worry::new(lvl))
+            .map(Worry::new)
             .collect();
 
         let op = read_operation(ac(six[2]));
@@ -514,14 +493,14 @@ Monkey 3:
 
     #[test]
     pub fn test_part1() {
-        let monkey_business = calculate_monkey_business(&TEST, 20, true);
+        let monkey_business = calculate_monkey_business(TEST, 20, true);
 
         assert_eq!(10605, monkey_business);
     }
 
     #[test]
     pub fn test_part2() {
-        let monkey_business = calculate_monkey_business(&TEST, 10000, false);
+        let monkey_business = calculate_monkey_business(TEST, 10000, false);
 
         assert_eq!(2713310158, monkey_business);
     }
