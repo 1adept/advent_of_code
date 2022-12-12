@@ -76,7 +76,9 @@ impl<const W: usize, const H: usize> Grid<W, H> {
         let h = self.grid.len();
         let w = self.grid[0].len();
         let GridPos { row, col } = pos;
-        let neighbors = [
+        
+        // println!("Neighbors of {pos:?} are {neighbors:?}");
+        [
             if pos.row < h - 1 {
                 Some(GridPos::new(row + 1, *col))
             } else {
@@ -97,24 +99,7 @@ impl<const W: usize, const H: usize> Grid<W, H> {
             } else {
                 None
             },
-        ];
-        // println!("Neighbors of {pos:?} are {neighbors:?}");
-        neighbors
-    }
-
-    fn cost(&self, from: &GridPos, to: &GridPos) -> u8 {
-        let from = match *self.get(from.row, from.col) {
-            'S' => 'a',
-            c => c,
-        };
-        let to = match *self.get(to.row, to.col) {
-            'E' => 'z',
-            c => c,
-        };
-
-        let cost = (from as u8).abs_diff(to as u8);
-        // println!("Cost from '{from}' to '{to}' is {cost}");
-        cost
+        ]
     }
 
     fn start_end(&self) -> (GridPos, GridPos) {
@@ -127,8 +112,8 @@ impl<const W: usize, const H: usize> Grid<W, H> {
                     'E' => end = Some(GridPos { row: r, col: c }),
                     _ => (),
                 }
-                if start.is_some() && end.is_some() {
-                    return (start.unwrap(), end.unwrap());
+                if let (Some(s), Some(e)) = (&start, &end) {
+                    return (s.to_owned(), e.to_owned());
                 }
             }
         }
@@ -187,7 +172,7 @@ fn search<const W: usize, const H: usize>(
                 .map(|p| (p, 1))
                 .collect::<Vec<_>>()
         },
-        |n| n.distance(&end),
+        |n| n.distance(end),
         |n| n == end,
     )
 }
@@ -206,7 +191,7 @@ abdefghi";
     #[test]
     fn test_part1() {
         let gear = ClimbingGear { ascend: 1 };
-        let grid = read_grid::<8, 5>(&TEST);
+        let grid = read_grid::<8, 5>(TEST);
         let (start, end) = grid.start_end();
 
         let path = search::<8, 5>(&grid, &start, &end, &gear);
@@ -220,7 +205,7 @@ abdefghi";
     #[test]
     fn test_part2() {
         let gear = ClimbingGear { ascend: 1 };
-        let grid = read_grid::<8, 5>(&TEST);
+        let grid = read_grid::<8, 5>(TEST);
 
         let (_, end) = grid.start_end();
 
