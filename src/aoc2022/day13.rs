@@ -2,10 +2,10 @@ use std::{cmp::Ordering, fmt::Display};
 
 use nom::{
     branch::alt,
-    character::complete::{self, crlf, newline},
-    combinator::{map, opt},
-    multi::{many0, many1, separated_list0, separated_list1},
-    sequence::{delimited, preceded, terminated},
+    character::complete::{self},
+    combinator::{map},
+    multi::{separated_list0},
+    sequence::{delimited},
     Finish, IResult,
 };
 
@@ -130,14 +130,14 @@ mod tests {
 
     #[test]
     fn test_13part1() {
-        let result = &read_packets(&TEST);
+        let result = &read_packets(TEST);
 
         assert_eq!(13, count_ordered_packages(result));
     }
 
     #[test]
     fn test_13part2() {
-        let packages = &mut read_packets(&TEST);
+        let packages = &mut read_packets(TEST);
         let prod = super::divider_index_prod(packages);
 
         assert_eq!(140, prod);
