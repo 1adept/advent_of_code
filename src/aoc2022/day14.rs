@@ -25,7 +25,7 @@ pub fn tasks() {
     // let sand = count_when_sand_overflows(grid);
     // println!("Sand until overflow = {sand}");
 
-    let grid_floor = &mut create_rock_grid(&input);
+    let grid_floor = &mut create_rock_grid(input);
     let sand = count_when_sand_plugged(grid_floor);
     println!("Sand until overflow with floor = {sand}");
 }
@@ -141,7 +141,7 @@ impl Grid {
             for x in 0..=rock.points.len() - 2 {
                 let [a, b] = &rock.points[x..=(x + 1)] else { unreachable!() };
                 let dir = (*b - *a).normalized();
-                let mut current = a.clone();
+                let mut current = *a;
                 while (current != *b) {
                     self.set(current.row, current.col, Cell::Rock);
                     current = (current + dir);
@@ -329,9 +329,9 @@ fn count_when_sand_plugged(grid: &mut Grid) -> usize {
     }
 
     loop {
-        let mut sand = hole.clone();
+        let mut sand = hole;
         let mut touched_ground = false;
-        while let Some(next) = down_valid(&grid, &sand, grid.floor) {
+        while let Some(next) = down_valid(grid, &sand, grid.floor) {
             grid.set(sand.row, sand.col, Cell::Empty);
             sand = next;
             grid.set(sand.row, sand.col, Cell::Sand);
@@ -464,7 +464,7 @@ mod tests {
             },
             Coord {
                 row: 9,
-                col: 494 + 0,
+                col: 494,
             },
             Coord {
                 row: 9,
