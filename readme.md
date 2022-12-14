@@ -1,0 +1,3 @@
+# Advent of Code 2022
+
+Way too much time spend finding stupid bugs that could've easily been avoided ...
