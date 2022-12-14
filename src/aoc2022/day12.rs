@@ -22,7 +22,7 @@ pub fn tasks() {
                     let path = search(&grid, &pos, &end, &gear);
                     if let Some(path) = path {
                         paths_from_a.push(path.1);
-                    }else{
+                    } else {
                         // No path
                     }
                 }
@@ -76,7 +76,7 @@ impl<const W: usize, const H: usize> Grid<W, H> {
         let h = self.grid.len();
         let w = self.grid[0].len();
         let GridPos { row, col } = pos;
-        
+
         // println!("Neighbors of {pos:?} are {neighbors:?}");
         [
             if pos.row < h - 1 {

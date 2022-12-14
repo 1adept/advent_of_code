@@ -3,9 +3,9 @@ use std::{cmp::Ordering, fmt::Display};
 use nom::{
     branch::alt,
     character::complete::{self},
-    combinator::{map},
-    multi::{separated_list0},
-    sequence::{delimited},
+    combinator::map,
+    multi::separated_list0,
+    sequence::delimited,
     Finish, IResult,
 };
 

@@ -18,7 +18,7 @@ fn find_marker<const L: usize>(input: &str) -> String {
     let mut char_iter = input.chars().enumerate();
     let mut chars: [char; L] = [' '; L];
 
-    for char in chars.iter_mut().take(L){
+    for char in chars.iter_mut().take(L) {
         *char = char_iter.next().unwrap().1;
     }
 
@@ -60,9 +60,9 @@ mod tests {
         assert_eq!(10.to_string(), task1(INPUT4));
         assert_eq!(11.to_string(), task1(INPUT5));
     }
-    
+
     #[test]
-    fn test_task2(){
+    fn test_task2() {
         assert_eq!(19.to_string(), task2(INPUT1));
         assert_eq!(23.to_string(), task2(INPUT2));
         assert_eq!(23.to_string(), task2(INPUT3));

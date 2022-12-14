@@ -206,7 +206,7 @@ mod tests {
     }
 
     #[test]
-    fn test_move_keep_order(){
+    fn test_move_keep_order() {
         let mut depot = Depot::default();
         {
             let first = &mut depot.stacks[0];
