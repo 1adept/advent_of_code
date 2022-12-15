@@ -462,10 +462,7 @@ mod tests {
                 row: 8,
                 col: 494 + 8,
             },
-            Coord {
-                row: 9,
-                col: 494,
-            },
+            Coord { row: 9, col: 494 },
             Coord {
                 row: 9,
                 col: 494 + 1,
