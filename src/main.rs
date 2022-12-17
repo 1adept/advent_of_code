@@ -11,9 +11,10 @@ fn main() {
     //     .enumerate()
     //     .for_each(|(i, d)| println!("{}: {}", i, d));
 
-    let year = parse_or_request(&mut args, "Please enter a year: ");
-    let day = parse_or_request(&mut args, "Please enter a day: ");
-
+    // let year = parse_or_request(&mut args, "Please enter a year: ");
+    // let day = parse_or_request(&mut args, "Please enter a day: ");
+let year = 2022;
+let day = 16;
     println!("Executing task for Year: {}; Day: {}", year, day);
 
     match year {
