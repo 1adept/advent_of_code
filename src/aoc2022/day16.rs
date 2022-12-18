@@ -52,16 +52,21 @@ pub fn tasks() {
 }
 
 type Node = usize;
+/// BitMask of a single Valve
 type Valve = u64;
+/// BitMask of all currently opened valves
 type ValveMask = Valve;
 type Score = u16;
 type Minute = u16;
+/// Tuple of a node and the time the owner will arrive at that node
+/// e.g `human = (0, 10)` means that `human` will arrive at node 0 with 10 minutes remaining
+type NodeWalk = (Node, Minute);
 
 fn dfs_2(
-    cache: &mut HashMap<((Node, Minute), (Node, Minute), ValveMask, Minute), Score>,
+    cache: &mut HashMap<(NodeWalk, NodeWalk, ValveMask, Minute), Score>,
     graph: &dyn Graph,
-    h: (Node, Minute),
-    e: (Node, Minute),
+    h: NodeWalk,
+    e: NodeWalk,
     opened: ValveMask,
     minute: Minute,
 ) -> Score {
@@ -103,7 +108,7 @@ fn dfs_2(
         return score + dfs_2(cache, graph, h, e, opened, new_min);
     }
 
-    let get_valid = |node: (Node, Minute)| -> Vec<(Node, Minute)> {
+    let get_valid = |node: NodeWalk| -> Vec<NodeWalk> {
         // Is at designates target
         if node.1 == minute {
             graph
@@ -118,7 +123,7 @@ fn dfs_2(
                 .collect::<Vec<_>>()
         } else {
             // Still walking to its target node... wait
-            vec![(node.0.clone(), node.1.clone())]
+            vec![(node.0, node.1)]
         }
     };
 

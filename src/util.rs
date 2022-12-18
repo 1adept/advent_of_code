@@ -23,7 +23,7 @@ pub fn load_input_as_vec(year: u16, day: u16) -> Vec<u8> {
     let path = format!("./input/{}/day{}.txt", year, day);
 
     let mut file_content = Vec::new();
-    let mut file = File::open(&path).expect("Unable to open file");
+    let mut file = File::open(path).expect("Unable to open file");
     file.read_to_end(&mut file_content)
         .expect("Unable to read file");
     file_content

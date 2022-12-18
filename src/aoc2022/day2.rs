@@ -24,6 +24,7 @@ pub fn tasks() {
     println!("With planned moves: result is: {planned_moves}");
 }
 
+#[allow(clippy::upper_case_acronyms)]
 #[derive(Debug)]
 enum RPS {
     Rock,
