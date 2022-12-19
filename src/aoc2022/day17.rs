@@ -213,8 +213,10 @@ impl Chamber {
 
     fn stash(&mut self) {
         // If there an opporunity to trim the bottom take it, else take the 'emergency' || path
-        if (self.height > Self::STASH as usize && Self::cols().all(|c| self.bits[c] >> Self::STASH != 0))
-            || self.height > 64 - 8 // Min size needed 64->Chamber, 8->(falling) Rock
+        if (self.height > Self::STASH as usize
+            && Self::cols().all(|c| self.bits[c] >> Self::STASH != 0))
+            || self.height > 64 - 8
+        // Min size needed 64->Chamber, 8->(falling) Rock
         {
             let mut lowest = [0 as Stash; Self::W];
             for c in 0..Self::W {
