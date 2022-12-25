@@ -1,4 +1,4 @@
-use std::collections::{BTreeSet, HashSet};
+use std::collections::BTreeSet;
 
 pub fn tasks() {
     let input = super::load_input(18);
@@ -11,7 +11,7 @@ pub fn tasks() {
 }
 
 fn flood(lava: &[Vector]) -> u32 {
-    let lava = BTreeSet::from_iter(lava.into_iter());
+    let lava = BTreeSet::from_iter(lava.iter());
     let mut water = BTreeSet::new();
 
     fn is_contained(v: &Vector) -> bool {
@@ -21,7 +21,7 @@ fn flood(lava: &[Vector]) -> u32 {
     let mut points = vec![Vector { x: 0, y: 0, z: 0 }];
     let mut result = 0;
     while let Some(point) = points.pop() {
-        for adj in point.get_adjacent().iter().filter(|v| is_contained(*v)) {
+        for adj in point.get_adjacent().iter().filter(|v| is_contained(v)) {
             if lava.contains(&adj) {
                 // Found lava face
                 result += 1;
@@ -29,7 +29,7 @@ fn flood(lava: &[Vector]) -> u32 {
                 // Continue flood here
                 water.insert(*adj);
                 points.push(*adj);
-            } 
+            }
         }
     }
     result
@@ -40,9 +40,8 @@ fn count_open_faces(vecs: &[Vector]) -> usize {
 
     for i in 0..vecs.len() {
         let v1 = vecs[i];
-        for j in (i + 1)..vecs.len() {
-            let v2 = vecs[j];
-            if v1.touches(&v2) {
+        for v2 in vecs.iter().skip(i + 1) {
+            if v1.touches(v2) {
                 assume -= 2;
             }
         }
@@ -85,7 +84,7 @@ fn parse_input(input: &str) -> Vec<Vector> {
         let [x, y, z] = line
             .split(',')
             // 1 gap on the edge for part2 bc we need to go 'around' the coordinates and this way we can stay in the positive range
-            .map(|num| 1 + num.parse::<i8>().expect(&format!("{num} is not a number")))
+            .map(|num| 1 + num.parse::<i8>().unwrap_or_else(|_| panic!("{num} is not a number")))
             .collect::<Vec<_>>()[..]
         else{ panic!("Error parsing vector in line {line}"); };
         vecs.push(Vector { x, y, z });
