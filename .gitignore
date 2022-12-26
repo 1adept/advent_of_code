@@ -1,4 +1,5 @@
 /target
+*/rust/target*
 */input
 .vscode/*
 */haskell/dist-newstyle

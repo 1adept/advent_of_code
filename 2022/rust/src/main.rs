@@ -11,15 +11,11 @@ fn main() {
     //     .enumerate()
     //     .for_each(|(i, d)| println!("{}: {}", i, d));
 
-    let year = parse_or_request(&mut args, "Please enter a year: ");
     let day = parse_or_request(&mut args, "Please enter a day: ");
 
-    println!("Executing task for Year: {}; Day: {}", year, day);
+    println!("Executing task for Year: 2022; Day: {}", day);
 
-    match year {
-        2022 => aoc2022::day(day),
-        _ => unreachable!("Hasnt happened yet"),
-    }
+    aoc2022::day(day);
 }
 
 fn parse_or_request(args: &mut Args, message: &str) -> u16 {
