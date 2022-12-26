@@ -1,4 +1,4 @@
-# Revision history for haskell-aoc22
+# Revision history for haskell
 
 ## 0.1.0.0 -- YYYY-mm-dd
 
