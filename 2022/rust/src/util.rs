@@ -4,7 +4,7 @@ use std::{
 };
 
 pub fn load_input(_year: u16, day: u16) -> String {
-    let path = format!("../input/day{}.txt", day);
+    let path = format!("../input/day{day:0>2}.txt");
     if let Ok(string) = fs::read_to_string(&path) {
         string
     } else {
@@ -20,7 +20,7 @@ pub fn load_input(_year: u16, day: u16) -> String {
 }
 
 pub fn load_input_as_vec(_year: u16, day: u16) -> Vec<u8> {
-    let path = format!("../../input/day{}.txt", day);
+    let path = format!("../../input/day{day:0>2}.txt");
 
     let mut file_content = Vec::new();
     let mut file = File::open(path).expect("Unable to open file");

@@ -1,6 +1,14 @@
 use crate::util;
 
-mod day1;
+mod day01;
+mod day02;
+mod day03;
+mod day04;
+mod day05;
+mod day06;
+mod day07;
+mod day08;
+mod day09;
 mod day10;
 mod day11;
 mod day12;
@@ -10,28 +18,20 @@ mod day15;
 mod day16;
 mod day17;
 mod day18;
-mod day2;
 mod day20;
 mod day21;
-mod day3;
-mod day4;
-mod day5;
-mod day6;
-mod day7;
-mod day8;
-mod day9;
 
 pub fn day(day: u16) {
     match day {
-        1 => day1::tasks(),
-        2 => day2::tasks(),
-        3 => day3::tasks(),
-        4 => day4::tasks(),
-        5 => day5::tasks(),
-        6 => day6::tasks(),
-        7 => day7::tasks(),
-        8 => day8::tasks(),
-        9 => day9::tasks(),
+        01 => day01::tasks(),
+        02 => day02::tasks(),
+        03 => day03::tasks(),
+        04 => day04::tasks(),
+        05 => day05::tasks(),
+        06 => day06::tasks(),
+        07 => day07::tasks(),
+        08 => day08::tasks(),
+        09 => day09::tasks(),
         10 => day10::tasks(),
         11 => day11::tasks(),
         12 => day12::tasks(),

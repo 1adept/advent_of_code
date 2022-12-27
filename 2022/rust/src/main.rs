@@ -7,13 +7,9 @@ fn main() {
     let mut args = env::args();
     args.next();
 
-    // args.into_iter()
-    //     .enumerate()
-    //     .for_each(|(i, d)| println!("{}: {}", i, d));
-
     let day = parse_or_request(&mut args, "Please enter a day: ");
 
-    println!("Executing task for Year: 2022; Day: {}", day);
+    println!("Executing task for Year: 2022; Day: {day:0>2}");
 
     aoc2022::day(day);
 }
