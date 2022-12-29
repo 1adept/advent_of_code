@@ -100,3 +100,8 @@ executable day02
 executable day03
     import: build-directives
     main-is: days/day03.hs
+
+executable day04
+    import: build-directives
+    main-is: days/day04.hs
+    build-depends: split
