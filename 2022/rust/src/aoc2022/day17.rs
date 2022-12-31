@@ -216,7 +216,7 @@ impl Chamber {
 
         if trimmed == 0 && self.current_height > 64 - 8 {
             draw(self, &rock, 0);
-            let trim_to_8 = change + 16  - (64 - self.current_height);
+            let trim_to_8 = change + 16 - (64 - self.current_height);
             self.bits.iter_mut().for_each(|b| *b >>= trim_to_8);
             trimmed = trim_to_8;
         }

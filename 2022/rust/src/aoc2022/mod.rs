@@ -20,7 +20,9 @@ mod day17;
 mod day18;
 mod day20;
 mod day21;
+mod day22;
 
+#[allow(clippy::zero_prefixed_literal)]
 pub fn day(day: u16) {
     match day {
         01 => day01::tasks(),
@@ -44,7 +46,7 @@ pub fn day(day: u16) {
         // 19 => day19::tasks(),
         20 => day20::tasks(),
         21 => day21::tasks(),
-        // 22 => day22::tasks(),
+        22 => day22::tasks(),
         // 23 => day23::tasks(),
         // 24 => day24::tasks(),
         // 25 => day25::tasks(),

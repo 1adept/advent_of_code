@@ -1,5 +1,3 @@
-use std::collections::{LinkedList, VecDeque};
-
 pub fn tasks() {
     let input = super::load_input(20);
     let elems = parse(&input);

@@ -156,8 +156,7 @@ impl CycleChecker {
             let cycle = cycle.current;
 
             let signal_strength = register.value;
-            self.signal_str_at
-                .push(cycle as isize * signal_strength);
+            self.signal_str_at.push(cycle as isize * signal_strength);
         }
     }
 }
