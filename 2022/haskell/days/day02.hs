@@ -1,9 +1,9 @@
 import AoC
-import Data.Attoparsec.Text hiding (Result)
+import Data.Char ( isSpace ) 
 
 data Shape = Rock | Paper | Scissors
     deriving (Eq, Show, Ord, Enum)
-data Result = Draw | Win | Loss
+data Result = Loss | Draw | Win
     deriving (Eq, Show, Ord, Enum)
 data Round = Round Shape Shape 
     deriving (Eq, Show)
@@ -13,13 +13,21 @@ main = do
     input <- getInputFileName
     content <- readFile input
 
-    -- putStrLn content
+    let rounds = map (parseRound) $ lines content
 
-    let rounds = [parseRound r | r <- lines content]
-    putStrLn . show $ rounds
+    let part1 = sum $ map scoreRound rounds
+    print $ "Part1 " ++ show part1
 
-    -- putStrLn . show $ content
-    putStrLn "NOPER"
+    let part2 = sum $ map (scoreRound . amendRound) rounds
+    print $ "Part2 " ++ show part2
+
+amendRound :: Round -> Round
+amendRound (Round p1 p2) = Round p1 (playResult result p1)
+    where 
+        result = case p2 of
+            Rock      -> Loss
+            Paper     -> Draw
+            _         -> Win
 
 scoreShape :: Shape -> Int
 scoreShape sh = 1 + fromEnum sh
@@ -38,13 +46,24 @@ judgePlayer2 (Round x y)
         sit = [x, y]
 
 parseRound :: String -> Round
-parseRound str = Round p1 p2
-    where 
-        [p1, p2] = map parseShape $ sepBy str " "
-    
+parseRound str =
+    let (left, right) = splitAt 1 str
+        trim = reverse . dropWhile isSpace
+        toShape = parseShape . trim
+    in Round (toShape left) (toShape right)
 
 parseShape :: String -> Shape
 parseShape sh 
     | sh == "X" || sh == "A" = Rock
     | sh == "Y" || sh == "B" = Paper
     | otherwise              = Scissors
+
+playResult :: Result -> Shape -> Shape 
+playResult res sh = play strategy sh
+    where 
+        play :: (Int -> Int) -> Shape -> Shape
+        play dir = toEnum . (flip mod 3) . dir . (+3) . fromEnum
+        strategy = case res of
+            Win -> (+1)
+            Draw -> (+0)
+            Loss -> (subtract 1)
