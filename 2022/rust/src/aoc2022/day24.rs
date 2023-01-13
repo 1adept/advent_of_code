@@ -1,6 +1,4 @@
-use std::{
-    collections::HashSet,
-};
+use std::collections::HashSet;
 
 pub fn tasks() {
     use std::time::Instant;
@@ -8,7 +6,7 @@ pub fn tasks() {
 
     let time = Instant::now();
     let part1 = solve(&input, |field, bounds| {
-        find_path_b(
+        find_path_breath(
             0,
             (
                 &Pos::new(bounds.min.row - 1, bounds.min.col),
@@ -37,10 +35,11 @@ pub fn tasks() {
             end
         };
 
-        // let first_pass = find_path_b(0, (&start, &end), &storms, bounds);
-        let forgot_snacks = find_path_b(part1, (&end, &start), &storms, bounds);
-        let got_snacks = find_path_b(forgot_snacks, (&start, &end), &storms, bounds);
-        got_snacks
+        // We already arrived at the and and only then we were told to go back
+        // so it makes sense we can skip this step, right ;)
+        // // let part1 = find_path_breath(0, (&start, &end), &storms, bounds);
+        let forgot_snacks = find_path_breath(part1, (&end, &start), &storms, bounds);
+        find_path_breath(forgot_snacks, (&start, &end), &storms, bounds)
     });
     println!(
         "Part2: {part2} in {:?}",
@@ -56,7 +55,7 @@ where
     solver(field, bounds)
 }
 
-fn find_path_b(
+fn find_path_breath(
     minute: u64,
     (start, end): (&Pos, &Pos),
     storms: &[Vec<Flake>],
@@ -311,7 +310,7 @@ mod tests {
     #[ignore = "Not actually a test :)"]
     fn test_day24_simple() {
         solve(EXAMPLE_SIMPLE, |field, bounds| {
-            find_path_b(
+            find_path_breath(
                 0,
                 (
                     &Pos::new(bounds.min.row - 1, bounds.min.col),
@@ -328,7 +327,7 @@ mod tests {
         assert_eq!(
             18,
             solve(EXAMPLE_COMPLEX, |field, bounds| {
-                find_path_b(
+                find_path_breath(
                     0,
                     (
                         &Pos::new(bounds.min.row - 1, bounds.min.col),
@@ -358,10 +357,9 @@ mod tests {
                     end
                 };
 
-                let first_pass = find_path_b(0, (&start, &end), &storms, bounds);
-                let forgot_snacks = find_path_b(first_pass, (&end, &start), &storms, bounds);
-                let got_snacks = find_path_b(forgot_snacks, (&start, &end), &storms, bounds);
-                got_snacks
+                let first_pass = find_path_breath(0, (&start, &end), &storms, bounds);
+                let forgot_snacks = find_path_breath(first_pass, (&end, &start), &storms, bounds);
+                find_path_breath(forgot_snacks, (&start, &end), &storms, bounds)
             })
         );
     }
