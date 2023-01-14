@@ -23,6 +23,7 @@ mod day21;
 mod day22;
 mod day23;
 mod day24;
+mod day25;
 
 #[allow(clippy::zero_prefixed_literal)]
 pub fn day(day: u16) {
@@ -51,7 +52,7 @@ pub fn day(day: u16) {
         22 => day22::tasks(),
         23 => day23::tasks(),
         24 => day24::tasks(),
-        // 25 => day25::tasks(),
+        25 => day25::tasks(),
         _ => unreachable!("Advent only has 25 days"),
     }
 }
