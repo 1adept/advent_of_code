@@ -18,6 +18,7 @@ mod day15;
 mod day16;
 mod day17;
 mod day18;
+mod day19;
 mod day20;
 mod day21;
 mod day22;
@@ -46,7 +47,7 @@ pub fn day(day: u16) {
         16 => day16::tasks(),
         17 => day17::tasks(),
         18 => day18::tasks(),
-        // 19 => day19::tasks(),
+        19 => day19::tasks(),
         20 => day20::tasks(),
         21 => day21::tasks(),
         22 => day22::tasks(),
