@@ -1,13 +1,13 @@
-module AoC ( getInputFileName ) where
+module AoC (getExample, getInput) where
 
-import System.Environment ( getArgs, getProgName )
+import Text.Printf ( printf )
 
-getInputFileName :: IO String
-getInputFileName = do
-    args <- getArgs
-    progName <- getProgName
-    let baseFileName =  if null args
-                        then progName
-                        else head args
-    let dataFileName = "../input/" ++ baseFileName ++ ".txt"
-    return dataFileName
+getInput, getExample :: Int -> String
+getInput = getFilePath "input"
+getExample = getFilePath "example"
+
+getFilePath :: String -> Int -> String
+getFilePath str day = "../" ++ str ++ "/" ++ getFileName day
+
+getFileName :: Int -> String
+getFileName = flip (++) (".in") . printf "day%02d"

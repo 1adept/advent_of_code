@@ -1,4 +1,4 @@
-import AoC (getInputFileName)
+import AoC
 import Data.List.Split ( splitOn )
 
 data Range = Range Int Int
@@ -16,8 +16,7 @@ example ="2-4,6-8\n\
 
 main :: IO ()
 main = do
-    fileName <- getInputFileName
-    content <- readFile fileName
+    content <- readFile $ getInput 4
 
     let ass         = map parseAssignment $ lines content
         count f     = length $ filter f $ ass

@@ -13,8 +13,7 @@ example = "vJrwpWtwJgWrhcsFMMfFFhFp\n\
 
 main :: IO ()
 main = do
-    file <- getInputFileName
-    content <- readFile file
+    content <- readFile $ getInput 3
     let rucksacks = fmap parseRucksack $ lines content
 
     print $ part1 rucksacks

@@ -10,8 +10,7 @@ data Round = Round Shape Shape
 
 main :: IO ()
 main = do 
-    input <- getInputFileName
-    content <- readFile input
+    content <- readFile $ getInput 2
 
     let rounds = map (parseRound) $ lines content
 
