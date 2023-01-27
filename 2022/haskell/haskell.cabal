@@ -125,3 +125,7 @@ executable day08
     import:         build-directives
     main-is:        days/day08.hs
     build-depends:  containers
+
+executable day09
+    import:         build-directives
+    main-is:        days/day09.hs
