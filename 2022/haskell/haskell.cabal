@@ -1,4 +1,4 @@
-cabal-version:      3.0
+cabal-version:      3.4
 -- The cabal-version field refers to the version of the .cabal specification,
 -- and can be different from the cabal-install (the tool) version and the
 -- Cabal (the library) version you are using. As such, the Cabal (the library)
@@ -129,3 +129,4 @@ executable day08
 executable day09
     import:         build-directives
     main-is:        days/day09.hs
+    build-depends:  containers
