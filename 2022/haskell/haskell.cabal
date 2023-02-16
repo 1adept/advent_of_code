@@ -106,10 +106,10 @@ executable day04
     main-is:        days/day04.hs
     build-depends:  split
 
-executable day05
-    import:         build-directives
-    main-is:        days/day05.hs
-    build-depends:  text, attoparsec, unordered-containers
+-- executable day05
+--     import:         build-directives
+--     main-is:        days/day05.hs
+--     build-depends:  text, attoparsec, unordered-containers
 
 executable day06
     import:         build-directives
@@ -130,3 +130,7 @@ executable day09
     import:         build-directives
     main-is:        days/day09.hs
     build-depends:  containers
+
+executable day10
+    import:         build-directives
+    main-is:        days/day10.hs
