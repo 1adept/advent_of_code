@@ -28,40 +28,26 @@ main = do
     let e = parse example
     let i = parse input
 
-    print $ show $ exe e
+    print $ "Part1 example: " ++ show (solve1 e)
+    print $ "Part1   input: " ++ show (solve1 i)
 
-    putStrLn $ "Hello day " ++ show day
+solve1 :: [Instruction] -> Int
+solve1 = sum 
+        . map (uncurry (*))
+        . filter (\(cycle, _) -> cycle >= 20 && (cycle - 20) `mod` 40 == 0) 
+        . exec
 
-
-totalCycles :: [Instruction] -> Int
-totalCycles ins = sum $ fmap toCycle ins
+exec :: [Instruction] -> [State]
+exec instructions = exec' instructions [(1, 1)] -- Starting cycle and register value are 1 each
     where
-        toCycle :: Instruction -> Int
-        toCycle Nothing = 1
-        toCycle _       = 2
-
-exe :: [Instruction] -> Int
-exe instructions = 
-    let (total, cycle, reg) = exe' instructions False (0, 1, 1)
-    in total
-    where
-        exe' :: [Instruction] -> Bool -> (Int, Int, Int) -> (Int, Int, Int)
-        exe' []         _    result                = result
-        exe' ins@(i:is) idle (total, cycle, reg)   = 
-            let newTotal = if record cycle
-                    then trace 
-                        (printf "Cycle %3d with register %d => strength %4d, total = %5d" 
-                            cycle reg (cycle * reg) (total + cycle * reg)) 
-                        (total + cycle * reg)
-                    else total
+        exec' :: [Instruction] -> [State] -> [State]
+        exec' []     result = reverse result
+        exec' (i:is) result@(last:_) = 
+            let (lastCycle, lastReg) = last
+                next = (lastCycle + 1, lastReg)
             in case i of
-                Nothing -> exe' is False (newTotal, cycle + 1, reg)
-                Just val -> if idle
-                    then exe' is False (newTotal, cycle + 1, reg + val)
-                    else exe' ins True (newTotal, cycle + 1, reg)
-
-        record :: Int -> Bool
-        record cycle = cycle >= 20 && (cycle - 20) `mod` 40 == 0
+                Nothing  -> exec' is $ next : result
+                Just val -> exec' is $ (lastCycle + 2, lastReg + val) : next : result
 
 parse :: String -> [Instruction]
 parse = map parse' . lines
